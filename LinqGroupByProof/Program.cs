@@ -28,42 +28,42 @@ var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>()
 if (dbContext.Database.EnsureCreated())
 {
 
-    List<MemberAdded> memberAddeds = new List<MemberAdded>
-{
-    new MemberAdded("John Henry", MemberRole.Student, PhotoState.Activated),
-    new MemberAdded("Roaxanne Smith", MemberRole.Student, PhotoState.Activated),
-    new MemberAdded("Simone Juryvouski", MemberRole.Student, PhotoState.Activated),
-    new MemberAdded("James Smith", MemberRole.Student, PhotoState.NotActivated),
-    new MemberAdded("Hector Mac", MemberRole.Student, PhotoState.NoPhoto),
-    new MemberAdded("Phil Smith", MemberRole.Student, PhotoState.Activated),
-    new MemberAdded("Jane Doe", MemberRole.Staff, PhotoState.Activated),
-    new MemberAdded("Bob Henry", MemberRole.Staff, PhotoState.Activated),
-    new MemberAdded("Cecil Peters", MemberRole.Staff, PhotoState.NoPhoto),
-};
+    List<SampleMember> sampleMembers = new List<SampleMember>
+    {
+        new SampleMember("John Henry", MemberRole.Student, PhotoState.Activated),
+        new SampleMember("Roaxanne Smith", MemberRole.Student, PhotoState.Activated),
+        new SampleMember("Simone Juryvouski", MemberRole.Student, PhotoState.Activated),
+        new SampleMember("James Smith", MemberRole.Student, PhotoState.NotActivated),
+        new SampleMember("Hector Mac", MemberRole.Student, PhotoState.NoPhoto),
+        new SampleMember("Phil Smith", MemberRole.Student, PhotoState.Activated),
+        new SampleMember("Jane Doe", MemberRole.Staff, PhotoState.Activated),
+        new SampleMember("Bob Henry", MemberRole.Staff, PhotoState.Activated),
+        new SampleMember("Cecil Peters", MemberRole.Staff, PhotoState.NoPhoto),
+    };
 
 
 
-    foreach (var memberToAdd in memberAddeds)
+    foreach (var sampleMember in sampleMembers)
     {
         var memberPhotos = new List<MemberPhoto>
-    {
-        new MemberPhoto
         {
-            Id = Guid.NewGuid(),
-            DateTaken = DateTime.Now,
-            PhotoType = PhotoType.Member,
-            Status = PhotoStatus.Approved
-        }
-    };
+            new MemberPhoto
+            {
+                Id = Guid.NewGuid(),
+                DateTaken = DateTime.Now,
+                PhotoType = PhotoType.Member,
+                Status = PhotoStatus.Approved
+            }
+        };
 
 
         dbContext.Set<Member>().Add(
             new Member
             {
                 Id = Guid.NewGuid(),
-                Name = memberToAdd.Name,
-                Role = memberToAdd.Role,
-                MemberPhotos = memberToAdd.PhotoState == PhotoState.NoPhoto ? new List<MemberPhoto>() : memberPhotos
+                Name = sampleMember.Name,
+                Role = sampleMember.Role,
+                MemberPhotos = sampleMember.PhotoState == PhotoState.NoPhoto ? new List<MemberPhoto>() : memberPhotos
             });
     }
 
@@ -73,7 +73,7 @@ if (dbContext.Database.EnsureCreated())
 
     foreach (var memberToUpdate in membersToUpdate)
     {
-        var memberDetail = memberAddeds.First(m => m.Name == memberToUpdate.Name);
+        var memberDetail = sampleMembers.First(m => m.Name == memberToUpdate.Name);
         if (memberDetail.PhotoState == PhotoState.Activated)
         {
             var memberPhoto = memberToUpdate.MemberPhotos.FirstOrDefault();

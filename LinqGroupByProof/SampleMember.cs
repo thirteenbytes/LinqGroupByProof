@@ -1,6 +1,6 @@
 ﻿using LinqGroupByProof.Domain;
 
-record MemberAdded(string Name, MemberRole Role, PhotoState PhotoState);
+record SampleMember(string Name, MemberRole Role, PhotoState PhotoState);
 
 //var result = dbContext.Set<Member>()
 //    .Select(m => new
